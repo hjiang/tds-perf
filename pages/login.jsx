@@ -23,6 +23,8 @@ export default function Home() {
     axios.post('/api/send_login_link', { email })
          .then(() => {
            setSent(true);
+         }).catch(e => {
+           setError(e.message);
          });
   }
   return (
