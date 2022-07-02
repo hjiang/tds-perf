@@ -1,4 +1,5 @@
 const LC = require('leanengine');
+const removeImports = require('next-remove-imports')();
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -14,5 +15,5 @@ module.exports = (phase) => {
       masterKey: process.env.LEANCLOUD_APP_MASTER_KEY,
     });
   }
-  return nextConfig;
+  return removeImports(nextConfig);
 };
