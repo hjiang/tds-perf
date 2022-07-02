@@ -54,11 +54,10 @@ export default function Home({ user }) {
         <p className={styles.description}>请尽可能详细地回答以下问题</p>
 
         <Typography
-          variant="plain"
+          variant="soft"
           level="body2"
           startDecorator="💡 "
           color="info"
-          variant="soft"
         >
           其中所有文字部分都支持 Markdown 格式。
         </Typography>
