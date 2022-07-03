@@ -15,6 +15,7 @@ export default function Home() {
   const [error, setError] = useState('');
   const [sent, setSent] = useState(false);
   const [showAds, setShowAds] = useState(false);
+  const [loading, setLoading] = useState(false);
   const login = () => {
     const trimmedEmail = email.trim();
     if (!trimmedEmail.endsWith('@xd.com')) {
@@ -22,18 +23,26 @@ export default function Home() {
       return;
     }
     setError('');
+    setLoading(true);
     axios
       .post('/api/send_login_link', { email })
       .then(() => {
         setSent(true);
+        setLoading(false);
       })
       .catch((e) => {
         setError(e.message);
+        setLoading(false);
       });
   };
   return (
     <div className={styles.container}>
       <main className={styles.main}>
+        {!!loading && (
+          <Typography className={styles.loading} variant="soft" color="warning">
+            Loading ...
+          </Typography>
+        )}
         <h1 className={styles.title}>TDS Perf Review</h1>
 
         {!sent && (
