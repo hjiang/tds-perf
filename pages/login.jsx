@@ -6,6 +6,7 @@ import Sheet from '@mui/joy/Sheet';
 import TextField from '@mui/joy/TextField';
 import Typography from '@mui/joy/Typography';
 import axios from 'axios';
+import LinkIcon from '@mui/icons-material/Link';
 
 import styles from '../styles/Login.module.css';
 
@@ -13,6 +14,7 @@ export default function Home() {
   const [email, setEmail] = useState('');
   const [error, setError] = useState('');
   const [sent, setSent] = useState(false);
+  const [showAds, setShowAds] = useState(false);
   const login = () => {
     const trimmedEmail = email.trim();
     if (!trimmedEmail.endsWith('@xd.com')) {
@@ -81,14 +83,23 @@ export default function Home() {
                 登录
               </Button>
             </div>
-            <Link
-              sx={{ mt: 5 }}
-              onClick={() => {
-                alert('还没来得及做，欢迎提 PR。请先用邮箱登录。');
-              }}
-            >
+            <Link sx={{ mt: 5 }} onClick={() => setShowAds(true)}>
               使用 SSO 登录
             </Link>
+            {!!showAds && (
+              <Typography
+                variant="soft"
+                color="info"
+                level="body1"
+                startDecorator="⌨ "
+              >
+                还没来得及做，欢迎{' '}
+                <Link href="https://github.com/hjiang/tds-perf">
+                  提 PR <LinkIcon />
+                </Link>
+                。请先用邮箱登录。
+              </Typography>
+            )}
           </Fragment>
         )}
       </main>
