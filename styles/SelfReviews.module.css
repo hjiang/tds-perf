@@ -12,13 +12,13 @@
   align-items: center;
 }
 
-.title {
+h1.title {
   margin: 0;
   line-height: 1.15;
   font-size: 4rem;
 }
 
-.title,
+h1.title,
 .description {
   text-align: center;
 }
@@ -37,8 +37,21 @@
   flex-direction: column;
 }
 
-.reviewItems > div {
+.reviewSection {
+  margin-top: 3rem;
+}
+
+.reviewSection > .title {
+  margin-bottom: 1rem;
+}
+
+.reviewItem {
+  margin-top: 2rem;
   width: 100%;
+}
+
+.reviewItem > * {
+  margin-top: 1rem;
 }
 
 @media (max-width: 600px) {
