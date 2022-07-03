@@ -2,6 +2,16 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 ## Getting Started
 
+运行时需要设置以下环境变量：
+
+- `LEANCLOUD_APP_ID`
+- `LEANCLOUD_APP_KEY`
+- `LEANCLOUD_APP_MASTER_KEY`
+- `LEANCLOUD_API_SERVER`
+- `COOKIE_KEY`: 生产环境必须大于 32 个字符
+- `MAILGUN_API_KEY`: 如果不设置，会在日志打印邮件内容
+- `DOMAIN`：用于生成邮箱验证链接
+
 First, run the development server:
 
 ```bash
