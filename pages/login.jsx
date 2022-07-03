@@ -80,7 +80,7 @@ export default function Home() {
             <Link
               sx={{ mt: 5 }}
               onClick={() => {
-                alert('还没来得及做，欢迎提 PR。');
+                alert('还没来得及做，欢迎提 PR。请先用邮箱登录。');
               }}
             >
               使用 SSO 登录
