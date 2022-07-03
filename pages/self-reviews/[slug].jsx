@@ -65,6 +65,7 @@ export default function SelfReview({ user, review }) {
   );
   const [info, setInfo] = useState('');
   const [error, setError] = useState('');
+  const [showEditorToolbar, setShowEditorToolbar] = useState(true);
   const marks = [
     { value: 0, label: '从不' },
     { value: 1, label: '很少' },
@@ -111,7 +112,7 @@ export default function SelfReview({ user, review }) {
       <main className={styles.main}>
         {!!info && (
           <Typography
-            variant="solid"
+            variant="soft"
             level="body1"
             color="success"
             startDecorator="👌 "
@@ -123,7 +124,7 @@ export default function SelfReview({ user, review }) {
         )}
         {!!error && (
           <Typography
-            variant="solid"
+            variant="soft"
             level="body1"
             color="danger"
             className={styles.errorToast}
@@ -143,7 +144,13 @@ export default function SelfReview({ user, review }) {
           startDecorator="💡 "
           color="info"
         >
-          其中所有文字部分都支持 Markdown 格式。
+          文字部分支持 Markdown 格式。{' '}
+          <Checkbox
+            label="显示编辑器工具栏"
+            variant="outlined"
+            checked={showEditorToolbar}
+            onChange={(e) => setShowEditorToolbar(e.target.checked)}
+          />
         </Typography>
 
         <div className={styles.reviewItems}>
@@ -160,7 +167,7 @@ export default function SelfReview({ user, review }) {
                 value={summary}
                 onChange={setSummary}
                 preview="edit"
-                hideToolbar={true}
+                hideToolbar={!showEditorToolbar}
                 height={300}
               />
             </div>
@@ -204,7 +211,7 @@ export default function SelfReview({ user, review }) {
                 value={cultureText}
                 onChange={setCultureText}
                 preview="edit"
-                hideToolbar={true}
+                hideToolbar={!showEditorToolbar}
                 height={150}
               />
             </section>
@@ -235,7 +242,7 @@ export default function SelfReview({ user, review }) {
                 value={analyticalSkillText}
                 onChange={setAnalyticalSkillText}
                 preview="edit"
-                hideToolbar={true}
+                hideToolbar={!showEditorToolbar}
                 height={150}
               />
             </section>
@@ -266,7 +273,7 @@ export default function SelfReview({ user, review }) {
                 value={executionText}
                 onChange={setExecutionText}
                 preview="edit"
-                hideToolbar={true}
+                hideToolbar={!showEditorToolbar}
                 height={150}
               />
             </section>
@@ -297,7 +304,7 @@ export default function SelfReview({ user, review }) {
                 value={impactText}
                 onChange={setImpactText}
                 preview="edit"
-                hideToolbar={true}
+                hideToolbar={!showEditorToolbar}
                 height={150}
               />
             </section>
@@ -313,7 +320,7 @@ export default function SelfReview({ user, review }) {
                 value={strength}
                 onChange={setStrength}
                 preview="edit"
-                hideToolbar={true}
+                hideToolbar={!showEditorToolbar}
                 height={150}
               />
             </div>
@@ -329,7 +336,7 @@ export default function SelfReview({ user, review }) {
                 value={weakness}
                 onChange={setWeakness}
                 preview="edit"
-                hideToolbar={true}
+                hideToolbar={!showEditorToolbar}
                 height={150}
               />
             </div>
@@ -352,7 +359,7 @@ export default function SelfReview({ user, review }) {
                 value={feedbackManager}
                 onChange={setFeedbackManager}
                 preview="edit"
-                hideToolbar={true}
+                hideToolbar={!showEditorToolbar}
                 height={150}
               />
             </div>
@@ -364,7 +371,7 @@ export default function SelfReview({ user, review }) {
                 value={feedbackCompany}
                 onChange={setFeedbackCompany}
                 preview="edit"
-                hideToolbar={true}
+                hideToolbar={!showEditorToolbar}
                 height={150}
               />
             </div>
