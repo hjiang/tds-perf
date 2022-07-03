@@ -39,6 +39,7 @@ h1.title,
 
 .reviewSection {
   margin-top: 3rem;
+  width: 100%;
 }
 
 .reviewSection > .title {
@@ -52,6 +53,13 @@ h1.title,
 
 .reviewItem > * {
   margin-top: 1rem;
+}
+
+.actions {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  margin-top: 4rem;
 }
 
 @media (max-width: 600px) {

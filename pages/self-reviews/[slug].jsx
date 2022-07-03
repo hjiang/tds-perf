@@ -29,6 +29,8 @@ export default function Home({ user }) {
   const [impactText, setImpactText] = useState('');
   const [strength, setStrength] = useState('');
   const [weakness, setWeakness] = useState('');
+  const [feedbackManager, setFeedbackManager] = useState('');
+  const [feedbackCompany, setFeedbackCompany] = useState('');
   const marks = [
     { value: 0, label: '从不' },
     { value: 1, label: '很少' },
@@ -103,7 +105,7 @@ export default function Home({ user }) {
             </Typography>
 
             <section className={styles.reviewItem}>
-              <Typography variant="plain" level="h5">
+              <Typography variant="plain" level="h5" startDecorator="🌞 ">
                 你认为自己是否在本季度实践了公司所倡导的文化？
               </Typography>
               <Typography variant="plain" level="body1">
@@ -134,7 +136,7 @@ export default function Home({ user }) {
             </section>
 
             <section className={styles.reviewItem}>
-              <Typography variant="plain" level="h5">
+              <Typography variant="plain" level="h5" startDecorator="🧮 ">
                 你认为自己在工作中是否有较高的分析和解决问题的能力？
               </Typography>
               <Typography variant="plain" level="body1">
@@ -165,7 +167,7 @@ export default function Home({ user }) {
             </section>
 
             <section className={styles.reviewItem}>
-              <Typography variant="plain" level="h5">
+              <Typography variant="plain" level="h5" startDecorator="🎯 ">
                 你认为自己在这段时间的工作中是否有较高的执行力？
               </Typography>
               <Typography variant="plain" level="body1">
@@ -196,7 +198,7 @@ export default function Home({ user }) {
             </section>
 
             <section className={styles.reviewItem}>
-              <Typography variant="plain" level="h5">
+              <Typography variant="plain" level="h5" startDecorator="🚩 ">
                 你认为自己在组织中是否有较高的影响力和存在感？
               </Typography>
               <Typography variant="plain" level="body1">
@@ -228,7 +230,10 @@ export default function Home({ user }) {
 
             <div className={styles.reviewItem}>
               <Typography variant="plain" level="h5" startDecorator="💪 ">
-                你认为自己有哪些做得比较好的方面，需要在未来继续坚持？
+                你认为自己有哪些强项？
+              </Typography>
+              <Typography variant="plain" level="body1">
+                有哪些做得比较好的方面，需要在未来继续坚持下去？
               </Typography>
               <MDEditor
                 value={strength}
@@ -241,7 +246,45 @@ export default function Home({ user }) {
 
             <div className={styles.reviewItem}>
               <Typography variant="plain" level="h5" startDecorator="⛳ ">
-                你认为自己哪些方面有弱点，有哪些过去的行为需要在未来停止，或者有哪些行为需要开始培养和发展？
+                你认为自己有哪些弱点？
+              </Typography>
+              <Typography variant="plain" level="body1">
+                有哪些过去的行为需要在未来停止，或者有哪些行为需要开始培养和发展，有什么具体计划？
+              </Typography>
+              <MDEditor
+                value={weakness}
+                onChange={setWeakness}
+                preview="edit"
+                hideToolbar={true}
+                height={150}
+              />
+            </div>
+          </div>
+
+          <div className={styles.reviewSection}>
+            <Typography
+              className={styles.title}
+              variant="plain"
+              level="h4"
+              startDecorator="🔊 "
+            >
+              管理反馈
+            </Typography>
+            <div className={styles.reviewItem}>
+              <Typography variant="plain" level="h5" startDecorator="🪜 ">
+                主管是否给你提供了足够支持，有哪些方面需要得到他/她的更多支持？
+              </Typography>
+              <MDEditor
+                value={weakness}
+                onChange={setWeakness}
+                preview="edit"
+                hideToolbar={true}
+                height={150}
+              />
+            </div>
+            <div className={styles.reviewItem}>
+              <Typography variant="plain" level="h5" startDecorator="👨‍🦲 ">
+                公司是否给你提供了足够支持，公司进行哪些改变可以让你或团队工作得更好？
               </Typography>
               <MDEditor
                 value={weakness}
@@ -257,7 +300,7 @@ export default function Home({ user }) {
           <Button className={styles.action} onClick={save}>
             保存
           </Button>
-          <Button className={styles.action} onClick={submit}>
+          <Button className={styles.action} onClick={submit} color="secondary">
             提交
           </Button>
         </div>
