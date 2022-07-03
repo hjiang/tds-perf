@@ -34,7 +34,11 @@ export default function Home() {
       <main className={styles.main}>
         <h1 className={styles.title}>TDS Perf Review</h1>
 
-        {!sent && <p className={styles.description}>请输入公司邮箱登录。</p>}
+        {!sent && (
+          <p className={styles.description}>
+            请输入公司邮箱登录。如果你有多个邮箱，请使用与全名一致的邮箱，避免出现多个账号。
+          </p>
+        )}
 
         {error && (
           <Typography
