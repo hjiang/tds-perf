@@ -5,17 +5,12 @@ import Typography from '@mui/joy/Typography';
 
 import styles from '../styles/Home.module.css';
 import { withSessionSsr } from '../lib/session';
+import { sessionUser } from '../lib/user';
+import RedirectToLogin from '../components/RedirectToLogin';
 
 export default function Home({ user }) {
   if (!user) {
-    return (
-      <div>
-        <Head>
-          <meta httpEquiv="refresh" content="0; URL='/login'" />
-        </Head>
-        Redirecting you to the login page.
-      </div>
-    );
+    return <RedirectToLogin />;
   }
   return (
     <div className={styles.container}>
@@ -37,5 +32,5 @@ export default function Home({ user }) {
 }
 
 export const getServerSideProps = withSessionSsr(({ req }) => {
-  return { props: { user: req.session.user } };
+  return { props: { user: sessionUser(req.session) } };
 });

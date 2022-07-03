@@ -57,9 +57,20 @@ h1.title,
 
 .actions {
   display: flex;
-  justify-content: center;
+  width: 100%;
+  justify-content: flex-end;
   gap: 2rem;
   margin-top: 4rem;
+  align-items: center;
+}
+
+.infoToast,
+.errorToast {
+  position: sticky;
+  top: 0.5rem;
+  z-index: 99999;
+  padding: 0.3rem 1rem;
+  cursor: pointer;
 }
 
 @media (max-width: 600px) {

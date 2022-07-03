@@ -1,4 +1,5 @@
 import Head from 'next/head';
+import axios from 'axios';
 import NextLink from 'next/link';
 import JoyLink from '@mui/joy/Link';
 import Typography from '@mui/joy/Typography';
@@ -10,27 +11,60 @@ import { useState } from 'react';
 import Button from '@mui/joy/Button';
 import Slider from '@mui/joy/Slider';
 import Box from '@mui/joy/Box';
+import Checkbox from '@mui/joy/Checkbox';
 
 import styles from '../../styles/SelfReviews.module.css';
 import { withSessionSsr } from '../../lib/session';
+import { sessionUser } from '../../lib/user';
+import { getSelfReview } from '../../lib/self-review';
+import RedirectToLogin from '../../components/RedirectToLogin';
 
 const MDEditor = dynamic(() => import('@uiw/react-md-editor'), { ssr: false });
 
-export default function Home({ user }) {
+function nullOrUndefined(a) {
+  return a === null || typeof a === 'undefined';
+}
+
+function storedOrDefault(a, d) {
+  return nullOrUndefined(a) ? d : a;
+}
+
+export default function SelfReview({ user, review }) {
   const router = useRouter();
-  const [summary, setSummary] = useState('');
-  const [cultureScore, setCultureScore] = useState(2);
-  const [cultureText, setCultureText] = useState('');
-  const [analyticalSkillScore, setAnalyticalSkillScore] = useState(2);
-  const [analyticalSkillText, setAnalyticalSkillText] = useState('');
-  const [executionScore, setExecutionScore] = useState(2);
-  const [executionText, setExecutionText] = useState('');
-  const [impactScore, setImpactScore] = useState(2);
-  const [impactText, setImpactText] = useState('');
-  const [strength, setStrength] = useState('');
-  const [weakness, setWeakness] = useState('');
-  const [feedbackManager, setFeedbackManager] = useState('');
-  const [feedbackCompany, setFeedbackCompany] = useState('');
+  const [summary, setSummary] = useState(review.summary || '');
+  const [cultureScore, setCultureScore] = useState(
+    storedOrDefault(review.cultureScore, 2),
+  );
+  const [cultureText, setCultureText] = useState(review.cultureText || '');
+  const [analyticalSkillScore, setAnalyticalSkillScore] = useState(
+    storedOrDefault(review.analyticalSkillScore, 2),
+  );
+  const [analyticalSkillText, setAnalyticalSkillText] = useState(
+    review.analyticalSkillText || '',
+  );
+  const [executionScore, setExecutionScore] = useState(
+    storedOrDefault(review.executionScore, 2),
+  );
+  const [executionText, setExecutionText] = useState(
+    review.executionText || '',
+  );
+  const [impactScore, setImpactScore] = useState(
+    storedOrDefault(review.executionScore, 2),
+  );
+  const [impactText, setImpactText] = useState(review.impactText || '');
+  const [strength, setStrength] = useState(review.strength || '');
+  const [weakness, setWeakness] = useState(review.weakness || '');
+  const [feedbackManager, setFeedbackManager] = useState(
+    review.feedbackManager || '',
+  );
+  const [feedbackCompany, setFeedbackCompany] = useState(
+    review.feedbackCompany || '',
+  );
+  const [finalized, setFinalized] = useState(
+    storedOrDefault(review.finalized, false),
+  );
+  const [info, setInfo] = useState('');
+  const [error, setError] = useState('');
   const marks = [
     { value: 0, label: '从不' },
     { value: 1, label: '很少' },
@@ -40,25 +74,65 @@ export default function Home({ user }) {
   ];
 
   if (!user) {
-    return (
-      <div>
-        <Head>
-          <meta httpEquiv="refresh" content="0; URL='/login'" />
-        </Head>
-        Redirecting you to the login page.
-      </div>
-    );
+    return <RedirectToLogin />;
   }
 
   const { slug } = router.query;
-  const save = () => {
-    console.log(summary);
+  const save = async () => {
+    try {
+      await axios.post('/api/cycles/2022-q2/self-review', {
+        summary,
+        cultureScore,
+        cultureText,
+        analyticalSkillScore,
+        analyticalSkillText,
+        executionScore,
+        executionText,
+        impactScore,
+        impactText,
+        strength,
+        weakness,
+        feedbackManager,
+        feedbackCompany,
+        finalized,
+      });
+      setInfo('已保存');
+    } catch (e) {
+      setError(e.message);
+    }
   };
 
-  const submit = () => {};
+  const submit = async () => {
+    setFinalized(true);
+    await save();
+  };
   return (
     <div className={styles.container}>
       <main className={styles.main}>
+        {!!info && (
+          <Typography
+            variant="solid"
+            level="body1"
+            color="success"
+            startDecorator="👌 "
+            className={styles.infoToast}
+            onClick={() => setInfo('')}
+          >
+            {info}
+          </Typography>
+        )}
+        {!!error && (
+          <Typography
+            variant="solid"
+            level="body1"
+            color="danger"
+            className={styles.errorToast}
+            startDecorator="🤦 "
+            onClick={() => setError('')}
+          >
+            {error}
+          </Typography>
+        )}
         <h1 className={styles.title}>{slug} 自我评价</h1>
 
         <p className={styles.description}>请尽可能详细地回答以下问题</p>
@@ -275,8 +349,8 @@ export default function Home({ user }) {
                 主管是否给你提供了足够支持，有哪些方面需要得到他/她的更多支持？
               </Typography>
               <MDEditor
-                value={weakness}
-                onChange={setWeakness}
+                value={feedbackManager}
+                onChange={setFeedbackManager}
                 preview="edit"
                 hideToolbar={true}
                 height={150}
@@ -287,28 +361,34 @@ export default function Home({ user }) {
                 公司是否给你提供了足够支持，公司进行哪些改变可以让你或团队工作得更好？
               </Typography>
               <MDEditor
-                value={weakness}
-                onChange={setWeakness}
+                value={feedbackCompany}
+                onChange={setFeedbackCompany}
                 preview="edit"
                 hideToolbar={true}
                 height={150}
               />
             </div>
           </div>
-        </div>
-        <div className={styles.actions}>
-          <Button className={styles.action} onClick={save}>
-            保存
-          </Button>
-          <Button className={styles.action} onClick={submit} color="secondary">
-            提交
-          </Button>
+          <div className={styles.actions}>
+            <Checkbox
+              className={styles.action}
+              onChange={(e) => setFinalized(e.target.checked)}
+              checked={finalized}
+              variant="outlined"
+              label="已完成"
+            />
+            <Button className={styles.action} onClick={save}>
+              保存
+            </Button>
+          </div>
         </div>
       </main>
     </div>
   );
 }
 
-export const getServerSideProps = withSessionSsr(({ req }) => {
-  return { props: { user: req.session.user } };
+export const getServerSideProps = withSessionSsr(async ({ req, query }) => {
+  const user = sessionUser(req.session);
+  const review = (await getSelfReview(user.id, query.slug)) || {};
+  return { props: { user, review } };
 });
