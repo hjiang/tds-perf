@@ -1,18 +1,26 @@
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
+This is used for quarterly self-assessment and peer-reviews.
+
 ## Getting Started
 
-运行时需要设置以下环境变量：
+The following environment variables must be set at runtime:
 
-- `LEANCLOUD_APP_ID`
-- `LEANCLOUD_APP_KEY`
-- `LEANCLOUD_APP_MASTER_KEY`
-- `LEANCLOUD_API_SERVER`
-- `COOKIE_KEY`: 生产环境必须大于 32 个字符
-- `MAILGUN_API_KEY`: 如果不设置，会在日志打印邮件内容
-- `DOMAIN`：用于生成邮箱验证链接
+- `LEANCLOUD_APP_ID`: automatically set when running on LeanEngine
+- `LEANCLOUD_APP_KEY`: automatically set when running on LeanEngine
+- `LEANCLOUD_APP_MASTER_KEY`: automatically set when running on LeanEngine
+- `LEANCLOUD_API_SERVER`: automatically set when running on LeanEngine
+- `COOKIE_KEY`: must be longer than 32 characters in production
+- `MAILGUN_API_KEY`: if not set, no email will be sent. The sign-in links are printed in the log.
+- `DOMAIN`: used for generating sign-in links.
 
-First, run the development server:
+First, install the dependencies:
+
+```bash
+npm ci
+```
+
+and run the development server:
 
 ```bash
 npm run dev
@@ -24,10 +32,6 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
-
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
-
 ## Learn More
 
 To learn more about Next.js, take a look at the following resources:
@@ -35,10 +39,21 @@ To learn more about Next.js, take a look at the following resources:
 - [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
 - [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+## Deployment
 
-## Deploy on Vercel
+Use [LeanEngine](https://docs.leancloud.cn/sdk/engine/overview/).
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## URL structure
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Work in progress ...
+
+### User-facing pages
+
+- `/` - home page
+- `/login` - login
+- `/self-reviews/[cycle]` - page for the current user to write self-review for a given cycle
+- `/peer-reviews/[cycle]/invites` - page for the current user to invite others to write peer reviews
+- `/peer-reviews/[cycle]/inbox` - page for the current user to view others' reviews for her
+- `/peer-reviews/[cycle]/outbox` - page for the current user to write reviews for other people
+
+### API paths
