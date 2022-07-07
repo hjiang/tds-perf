@@ -18,8 +18,11 @@ export default function Home() {
   const [loading, setLoading] = useState(false);
   const login = () => {
     const trimmedEmail = email.trim();
-    if (!trimmedEmail.endsWith('@xd.com')) {
-      setError('邮箱必须以 @xd.com 结尾');
+    if (
+      !trimmedEmail.endsWith('@xd.com') &&
+      !trimmedEmail.endsWith('@beyondsoft.com')
+    ) {
+      setError('邮箱必须以 @xd.com 或 @beyondsoft.com 结尾');
       return;
     }
     setError('');
