@@ -396,6 +396,6 @@ export default function SelfReview({ user, review }) {
 
 export const getServerSideProps = withSessionSsr(async ({ req, query }) => {
   const user = sessionUser(req.session);
-  const review = (await getSelfReview(user.id, query.slug)) || {};
+  const review = user ? (await getSelfReview(user.id, query.slug)) || {} : {};
   return { props: { user, review } };
 });
