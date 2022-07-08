@@ -49,7 +49,7 @@ export default function SelfReview({ user, review }) {
     review.executionText || '',
   );
   const [impactScore, setImpactScore] = useState(
-    storedOrDefault(review.executionScore, 2),
+    storedOrDefault(review.impactScore, 2),
   );
   const [impactText, setImpactText] = useState(review.impactText || '');
   const [strength, setStrength] = useState(review.strength || '');
