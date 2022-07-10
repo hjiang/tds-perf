@@ -43,6 +43,12 @@ To learn more about Next.js, take a look at the following resources:
 
 Use [LeanEngine](https://docs.leancloud.cn/sdk/engine/overview/).
 
+You need to manually create the following classes on the LeanCloud web console:
+
+- ReviewCycle (create an object with the slug attribute equal to `2022-q2`)
+- SelfReview
+- PeerReview
+
 ## URL structure
 
 Work in progress ...
