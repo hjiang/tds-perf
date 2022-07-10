@@ -9,18 +9,24 @@ import TextField from '@mui/joy/TextField';
 import Button from '@mui/joy/Button';
 import React, { useState } from 'react';
 import Info from '@mui/icons-material/Info';
+import { useRouter } from 'next/router';
+import axios from 'axios';
 
 import styles from '../../../styles/Home.module.css';
 import { withSessionSsr } from '../../../lib/session';
 import { sessionUser } from '../../../lib/user';
+import { getPeerReviewerEmailsForUser } from '../../../lib/peer-review';
 import RedirectToLogin from '../../../components/RedirectToLogin';
 
-export default function Home({ user }) {
-  const [reviewerEmails, setReviewerEmails] = useState([]);
+export default function Home(props) {
+  const router = useRouter();
+  const user = props.user;
+  const { cycle } = router.query;
+  const [reviewerEmails, setReviewerEmails] = useState(props.reviewerEmails);
   const [newEmail, setNewEmail] = useState('');
   const [error, setError] = useState('');
 
-  const addEmail = () => {
+  const addEmail = async () => {
     const trimmedEmail = newEmail.trim();
     if (
       !trimmedEmail.endsWith('@xd.com') &&
@@ -29,21 +35,41 @@ export default function Home({ user }) {
       setError('邮箱必须以 @xd.com 或 @beyondsoft.com 结尾');
       return;
     }
-    if (reviewerEmails.includes(newEmail)) {
-      setError('已经邀请该同事');
+    if (reviewerEmails.includes(trimmedEmail)) {
+      setError('已经邀请过该同事');
+      return;
+    }
+    if (trimmedEmail === user.email) {
+      setError('你不能给自己写同事反馈');
       return;
     }
     setError('');
-    setReviewerEmails([...reviewerEmails, newEmail]);
-    setNewEmail('');
+    try {
+      await axios.post(`/api/cycles/${cycle}/peer-reviews`, {
+        reviewerEmail: trimmedEmail,
+      });
+      setReviewerEmails([...reviewerEmails, newEmail]);
+      setNewEmail('');
+    } catch (e) {
+      setError(e.response?.data?.message || e.message);
+    }
   };
 
-  const deleteReviewer = (email) => {
-    const emails = [...reviewerEmails];
-    const i = emails.indexOf(email);
-    emails.splice(i, 1);
-    setReviewerEmails(emails);
+  const deleteReviewer = async (email) => {
+    setError('');
+    try {
+      const emails = [...reviewerEmails];
+      const i = emails.indexOf(email);
+      await axios.delete(
+        `/api/cycles/${cycle}/peer-reviews/by/${email}/for/${user.id}`,
+      );
+      emails.splice(i, 1);
+      setReviewerEmails(emails);
+    } catch (e) {
+      setError(e.response?.data?.message || e.message);
+    }
   };
+
   if (!user) {
     return <RedirectToLogin />;
   }
@@ -117,6 +143,11 @@ export default function Home({ user }) {
   );
 }
 
-export const getServerSideProps = withSessionSsr(({ req }) => {
-  return { props: { user: sessionUser(req.session) } };
+export const getServerSideProps = withSessionSsr(async ({ req, query }) => {
+  const user = sessionUser(req.session);
+  const reviewerEmails = await getPeerReviewerEmailsForUser(
+    query.cycle,
+    user.id,
+  );
+  return { props: { user, reviewerEmails } };
 });

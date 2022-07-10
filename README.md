@@ -57,3 +57,6 @@ Work in progress ...
 - `/peer-reviews/[cycle]/outbox` - page for the current user to write reviews for other people
 
 ### API paths
+
+- `/api/cycles/[slug]/self-review`
+- `/api/cycles/[slug]/peer-reviews`
