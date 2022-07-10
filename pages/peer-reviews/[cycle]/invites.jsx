@@ -145,9 +145,9 @@ export default function Home(props) {
 
 export const getServerSideProps = withSessionSsr(async ({ req, query }) => {
   const user = sessionUser(req.session);
-  const reviewerEmails = await getPeerReviewerEmailsForUser(
-    query.cycle,
-    user.id,
-  );
+  let reviewerEmails = [];
+  if (user) {
+    reviewerEmails = await getPeerReviewerEmailsForUser(query.cycle, user.id);
+  }
   return { props: { user, reviewerEmails } };
 });
