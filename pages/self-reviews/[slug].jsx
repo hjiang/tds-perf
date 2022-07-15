@@ -80,6 +80,7 @@ export default function SelfReview({ user, review }) {
 
   const { slug } = router.query;
   const save = async () => {
+    setError('');
     try {
       await axios.post('/api/cycles/2022-q2/self-review', {
         summary,
