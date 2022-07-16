@@ -312,10 +312,10 @@ export default function SelfReview({ user, review }) {
 
             <div className={styles.reviewItem}>
               <Typography variant="plain" level="h5" startDecorator="💪 ">
-                你认为自己有哪些强项？
+                你认为自己有哪些做得较好的地方？
               </Typography>
               <Typography variant="plain" level="body1">
-                有哪些做得比较好的方面，需要在未来继续坚持下去？
+                在这段时间的工作中有哪些做得比较好的方面，需要在未来继续坚持下去？
               </Typography>
               <MDEditor
                 value={strength}
@@ -328,7 +328,7 @@ export default function SelfReview({ user, review }) {
 
             <div className={styles.reviewItem}>
               <Typography variant="plain" level="h5" startDecorator="⛳ ">
-                你认为自己有哪些弱点？
+                你认为自己在工作中存在哪些弱点？
               </Typography>
               <Typography variant="plain" level="body1">
                 有哪些过去的行为需要在未来停止，或者有哪些行为需要开始培养和发展，有什么具体计划？
