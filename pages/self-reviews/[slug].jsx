@@ -13,7 +13,7 @@ import Slider from '@mui/joy/Slider';
 import Box from '@mui/joy/Box';
 import Checkbox from '@mui/joy/Checkbox';
 
-import styles from '../../styles/SelfReviews.module.css';
+import styles from '../../styles/SelfReviews.module.scss';
 import { withSessionSsr } from '../../lib/session';
 import { sessionUser } from '../../lib/user';
 import { getSelfReview } from '../../lib/self-review';

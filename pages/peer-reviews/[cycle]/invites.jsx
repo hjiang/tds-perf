@@ -12,7 +12,7 @@ import Info from '@mui/icons-material/Info';
 import { useRouter } from 'next/router';
 import axios from 'axios';
 
-import styles from '../../../styles/Invites.module.css';
+import styles from '../../../styles/Invites.module.scss';
 import { withSessionSsr } from '../../../lib/session';
 import { sessionUser } from '../../../lib/user';
 import { getPeerReviewerEmailsForUser } from '../../../lib/peer-review';

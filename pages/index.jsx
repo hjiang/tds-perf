@@ -5,7 +5,7 @@ import Typography from '@mui/joy/Typography';
 import List from '@mui/joy/List';
 import ListItem from '@mui/joy/ListItem';
 
-import styles from '../styles/Home.module.css';
+import styles from '../styles/Home.module.scss';
 import { withSessionSsr } from '../lib/session';
 import { sessionUser } from '../lib/user';
 import RedirectToLogin from '../components/RedirectToLogin';
@@ -33,6 +33,13 @@ export default function Home({ user }) {
             <Typography variant="plain" level="h3" startDecorator="✉️ ">
               <NextLink href="/peer-reviews/2022-q2/invites" passHref>
                 <JoyLink>2022 Q2 同事反馈邀请</JoyLink>
+              </NextLink>
+            </Typography>
+          </ListItem>
+          <ListItem>
+            <Typography variant="plain" level="h3" startDecorator="✉️ ">
+              <NextLink href="/peer-reviews/2022-q2/outbox" passHref>
+                <JoyLink>2022 Q2 填写同事反馈</JoyLink>
               </NextLink>
             </Typography>
           </ListItem>

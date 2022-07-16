@@ -8,7 +8,7 @@ import Typography from '@mui/joy/Typography';
 import axios from 'axios';
 import LinkIcon from '@mui/icons-material/Link';
 
-import styles from '../styles/Login.module.css';
+import styles from '../styles/Login.module.scss';
 
 export default function Home() {
   const [email, setEmail] = useState('');

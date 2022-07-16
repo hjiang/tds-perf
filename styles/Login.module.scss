@@ -1,0 +1,22 @@
+@use 'common';
+
+.form {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  max-width: 800px;
+}
+
+.loading {
+  z-index: 99;
+  position: fixed;
+  top: 0.5rem;
+}
+
+@media (max-width: 600px) {
+  .form {
+    width: 100%;
+    flex-direction: column;
+  }
+}
