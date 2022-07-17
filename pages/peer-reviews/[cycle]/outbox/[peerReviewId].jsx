@@ -67,7 +67,7 @@ export default function PeerReview({ user, cycle, selfReview, peerReview }) {
   );
   const [impactText, setImpactText] = useState(peerReview.impactText || '');
   const [confidentialEval, setConfidentialEval] = useState(
-    peerReview.impactText || '',
+    peerReview.confidentialEval || '',
   );
   const [finalized, setFinalized] = useState(
     storedOrDefault(peerReview.finalized, false),
