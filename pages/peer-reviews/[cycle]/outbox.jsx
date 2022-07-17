@@ -36,6 +36,9 @@ export default function Home({ user, peerReviews, cycle }) {
             </ListItem>
           ))}
         </List>
+        <NextLink href="/" passHref>
+          <JoyLink>返回</JoyLink>
+        </NextLink>
       </main>
     </div>
   );

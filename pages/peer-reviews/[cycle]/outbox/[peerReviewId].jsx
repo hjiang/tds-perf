@@ -8,6 +8,8 @@ import Slider from '@mui/joy/Slider';
 import Box from '@mui/joy/Box';
 import Checkbox from '@mui/joy/Checkbox';
 import Button from '@mui/joy/Button';
+import NextLink from 'next/link';
+import JoyLink from '@mui/joy/Link';
 
 import styles from '../../../../styles/OutgoingPeerReview.module.scss';
 import { withSessionSsr } from '../../../../lib/session';
@@ -394,6 +396,9 @@ export default function PeerReview({ user, cycle, selfReview, peerReview }) {
               保存
             </Button>
           </div>
+          <NextLink href={`/peer-reviews/${cycle}/outbox`} passHref>
+            <JoyLink>返回</JoyLink>
+          </NextLink>
         </div>
       </main>
     </div>
