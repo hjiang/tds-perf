@@ -18,16 +18,9 @@ import { withSessionSsr } from '../../lib/session';
 import { sessionUser } from '../../lib/user';
 import { getSelfReview } from '../../lib/self-review';
 import RedirectToLogin from '../../components/RedirectToLogin';
+import { storedOrDefault } from '../../lib/util';
 
 const MDEditor = dynamic(() => import('@uiw/react-md-editor'), { ssr: false });
-
-function nullOrUndefined(a) {
-  return a === null || typeof a === 'undefined';
-}
-
-function storedOrDefault(a, d) {
-  return nullOrUndefined(a) ? d : a;
-}
 
 export default function SelfReview({ user, review }) {
   const router = useRouter();
@@ -82,7 +75,7 @@ export default function SelfReview({ user, review }) {
   const save = async () => {
     setError('');
     try {
-      await axios.post('/api/cycles/2022-q2/self-review', {
+      await axios.post(`/api/cycles/${slug}/self-review`, {
         summary,
         cultureScore,
         cultureText,
@@ -104,10 +97,6 @@ export default function SelfReview({ user, review }) {
     }
   };
 
-  const submit = async () => {
-    setFinalized(true);
-    await save();
-  };
   return (
     <div className={styles.container}>
       <main className={styles.main}>
@@ -328,7 +317,7 @@ export default function SelfReview({ user, review }) {
 
             <div className={styles.reviewItem}>
               <Typography variant="plain" level="h5" startDecorator="⛳ ">
-                你认为自己在工作中存在哪些弱点？
+                你认为自己在工作中存在哪些待改进的方面？
               </Typography>
               <Typography variant="plain" level="body1">
                 有哪些过去的行为需要在未来停止，或者有哪些行为需要开始培养和发展，有什么具体计划？
