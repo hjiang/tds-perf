@@ -378,6 +378,9 @@ export default function SelfReview({ user, review }) {
               保存
             </Button>
           </div>
+          <NextLink href="/" passHref>
+            <JoyLink>返回</JoyLink>
+          </NextLink>
         </div>
       </main>
     </div>
