@@ -11,7 +11,7 @@ import { sessionUser, userHasRole } from '../../../lib/user';
 import { getFinalizedSelfReviews } from '../../../lib/self-review';
 import RedirectToLogin from '../../../components/RedirectToLogin';
 
-export default function Home({ user, hasPermission, reviews, cycle }) {
+export default function Admin({ user, hasPermission, reviews, cycle }) {
   if (!user) {
     return <RedirectToLogin />;
   }
@@ -30,7 +30,10 @@ export default function Home({ user, hasPermission, reviews, cycle }) {
           {reviews.map((r) => (
             <ListItem key={r.id}>
               <Typography variant="plain" level="h5">
-                <NextLink href={`/admin/${cycle}/package/${r.id}`} passHref>
+                <NextLink
+                  href={`/admin/${cycle}/packages/${r.reviewer.objectId}`}
+                  passHref
+                >
                   <JoyLink>{r.reviewer.email}</JoyLink>
                 </NextLink>
               </Typography>
@@ -45,12 +48,15 @@ export default function Home({ user, hasPermission, reviews, cycle }) {
 export const getServerSideProps = withSessionSsr(async ({ req, query }) => {
   const user = sessionUser(req.session);
   const { cycle } = query;
-  const finalizedReviews = await getFinalizedSelfReviews(cycle);
+  const hasPermission = await userHasRole(user.id, 'admin');
+  const finalizedReviews = hasPermission
+    ? await getFinalizedSelfReviews(cycle)
+    : [];
   return {
     props: {
       user,
       cycle,
-      hasPermission: await userHasRole(user.id, 'admin'),
+      hasPermission,
       reviews: finalizedReviews,
     },
   };
