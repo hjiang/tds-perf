@@ -52,6 +52,9 @@ export const getServerSideProps = withSessionSsr(async ({ req, query }) => {
   const finalizedReviews = hasPermission
     ? await getFinalizedSelfReviews(cycle)
     : [];
+  finalizedReviews.sort((a, b) =>
+    a.reviewer.email < b.reviewer.email ? -1 : 1,
+  );
   return {
     props: {
       user,

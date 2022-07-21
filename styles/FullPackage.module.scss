@@ -1,1 +1,9 @@
 @use './common';
+
+.bodyContent {
+  text-align: left;
+  max-width: 800px;
+  a {
+    color: #6e85b7;
+  }
+}
