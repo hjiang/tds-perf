@@ -7,10 +7,10 @@ import ListItem from '@mui/joy/ListItem';
 
 import styles from '../styles/Home.module.scss';
 import { withSessionSsr } from '../lib/session';
-import { sessionUser } from '../lib/user';
+import { sessionUser, userHasRole } from '../lib/user';
 import RedirectToLogin from '../components/RedirectToLogin';
 
-export default function Home({ user }) {
+export default function Home({ user, isAdmin }) {
   if (!user) {
     return <RedirectToLogin />;
   }
@@ -37,18 +37,29 @@ export default function Home({ user }) {
             </Typography>
           </ListItem>
           <ListItem>
-            <Typography variant="plain" level="h3" startDecorator="✉️ ">
+            <Typography variant="plain" level="h3" startDecorator="✍️ ">
               <NextLink href="/peer-reviews/2022-q2/outbox" passHref>
                 <JoyLink>2022 Q2 填写同事反馈</JoyLink>
               </NextLink>
             </Typography>
           </ListItem>
+          {isAdmin && (
+            <ListItem>
+              <Typography variant="plain" level="h3" startDecorator="👮 ">
+                <NextLink href="/admin/2022-q2" passHref>
+                  <JoyLink>查看所有自评、环评（管理员）</JoyLink>
+                </NextLink>
+              </Typography>
+            </ListItem>
+          )}
         </List>
       </main>
     </div>
   );
 }
 
-export const getServerSideProps = withSessionSsr(({ req }) => {
-  return { props: { user: sessionUser(req.session) } };
+export const getServerSideProps = withSessionSsr(async ({ req }) => {
+  const user = sessionUser(req.session);
+  const isAdmin = user ? await userHasRole(user.id, 'admin') : false;
+  return { props: { user, isAdmin } };
 });

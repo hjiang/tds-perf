@@ -48,7 +48,7 @@ export default function Admin({ user, hasPermission, reviews, cycle }) {
 export const getServerSideProps = withSessionSsr(async ({ req, query }) => {
   const user = sessionUser(req.session);
   const { cycle } = query;
-  const hasPermission = await userHasRole(user.id, 'admin');
+  const hasPermission = user ? await userHasRole(user.id, 'admin') : false;
   const finalizedReviews = hasPermission
     ? await getFinalizedSelfReviews(cycle)
     : [];

@@ -209,7 +209,7 @@ export default function Package({
 export const getServerSideProps = withSessionSsr(async ({ req, query }) => {
   const user = sessionUser(req.session);
   const { cycle, userId } = query;
-  const hasPermission = await userHasRole(user.id, 'admin');
+  const hasPermission = user ? await userHasRole(user.id, 'admin') : false;
   const selfReview = hasPermission ? await getSelfReview(userId, cycle) : {};
   const peerReviews = hasPermission
     ? await getPeerReviewsByReviewee(cycle, userId)
