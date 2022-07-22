@@ -17,7 +17,7 @@ export default function Home() {
   const [showAds, setShowAds] = useState(false);
   const [loading, setLoading] = useState(false);
   const login = () => {
-    const trimmedEmail = email.trim();
+    const trimmedEmail = email.trim().toLowerCase();
     if (
       !trimmedEmail.endsWith('@xd.com') &&
       !trimmedEmail.endsWith('@beyondsoft.com')
@@ -28,7 +28,7 @@ export default function Home() {
     setError('');
     setLoading(true);
     axios
-      .post('/api/send_login_link', { email })
+      .post('/api/send_login_link', { email: trimmedEmail })
       .then(() => {
         setSent(true);
         setLoading(false);

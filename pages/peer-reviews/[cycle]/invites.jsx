@@ -27,7 +27,7 @@ export default function Home(props) {
   const [error, setError] = useState('');
 
   const addEmail = async () => {
-    const trimmedEmail = newEmail.trim();
+    const trimmedEmail = newEmail.trim().toLowerCase();
     if (
       !trimmedEmail.endsWith('@xd.com') &&
       !trimmedEmail.endsWith('@beyondsoft.com')
@@ -48,7 +48,7 @@ export default function Home(props) {
       await axios.post(`/api/cycles/${cycle}/peer-reviews`, {
         reviewerEmail: trimmedEmail,
       });
-      setReviewerEmails([...reviewerEmails, newEmail]);
+      setReviewerEmails([...reviewerEmails, trimmedEmail]);
       setNewEmail('');
     } catch (e) {
       setError(e.response?.data?.message || e.message);
