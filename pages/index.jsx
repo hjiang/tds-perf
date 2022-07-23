@@ -7,10 +7,10 @@ import ListItem from '@mui/joy/ListItem';
 
 import styles from '../styles/Home.module.scss';
 import { withSessionSsr } from '../lib/session';
-import { sessionUser, userHasRole } from '../lib/user';
+import { sessionUser, userHasRole, findUsersByManager } from '../lib/user';
 import RedirectToLogin from '../components/RedirectToLogin';
 
-export default function Home({ user, isAdmin }) {
+export default function Home({ user, isAdmin, isManager }) {
   if (!user) {
     return <RedirectToLogin />;
   }
@@ -52,6 +52,15 @@ export default function Home({ user, isAdmin }) {
               </Typography>
             </ListItem>
           )}
+          {isManager && (
+            <ListItem>
+              <Typography variant="plain" level="h3" startDecorator="💼 ">
+                <NextLink href="/manager/2022-q2" passHref>
+                  <JoyLink>查看下属自评、环评</JoyLink>
+                </NextLink>
+              </Typography>
+            </ListItem>
+          )}
         </List>
       </main>
     </div>
@@ -61,5 +70,8 @@ export default function Home({ user, isAdmin }) {
 export const getServerSideProps = withSessionSsr(async ({ req }) => {
   const user = sessionUser(req.session);
   const isAdmin = user ? await userHasRole(user.id, 'admin') : false;
-  return { props: { user, isAdmin } };
+  const isManager = user
+    ? (await findUsersByManager(user.id)).length > 0
+    : false;
+  return { props: { user, isAdmin, isManager } };
 });

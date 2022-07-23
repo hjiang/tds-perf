@@ -39,6 +39,9 @@ export default function Admin({ user, employees, cycle }) {
             </ListItem>
           ))}
         </List>
+        <NextLink href={`/`} passHref>
+          <JoyLink>返回</JoyLink>
+        </NextLink>
       </main>
     </div>
   );
