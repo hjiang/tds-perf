@@ -210,7 +210,6 @@ export const getServerSideProps = withSessionSsr(async ({ req, query }) => {
   const user = sessionUser(req.session);
   const { cycle, userId } = query;
   const employee = await getUser(userId);
-  console.log(employee);
   const hasPermission = user && employee.manager.objectId === user.id;
   const selfReview = hasPermission ? await getSelfReview(userId, cycle) : {};
   const peerReviews = hasPermission
