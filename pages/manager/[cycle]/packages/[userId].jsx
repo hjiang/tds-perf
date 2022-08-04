@@ -7,7 +7,6 @@ import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 
 import { withSessionSsr } from '../../../../lib/session';
-import { ssionSsr } from '../../../../lib/session';
 import { sessionUser, getUser } from '../../../../lib/user';
 import { getSelfReview } from '../../../../lib/self-review';
 import { getPeerReviewsByReviewee } from '../../../../lib/peer-review';
