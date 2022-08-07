@@ -409,10 +409,10 @@ export const getServerSideProps = withSessionSsr(async ({ req, query }) => {
   const user = sessionUser(req.session);
   const { cycle, peerReviewId } = query;
   const peerReview = user ? (await getPeerReviewById(peerReviewId)) || {} : {};
-  const { summary } =
+  const selfReview =
     peerReview && peerReview.reviewer.id === user.id
-      ? (await getSelfReview(peerReview.reviewee.id, cycle)) || {}
+      ? await getSelfReview(peerReview.reviewee.id, cycle)
       : {};
-  const selfReview = { summary };
-  return { props: { user, cycle, peerReview, selfReview } };
+  const summary = selfReview?.summary || '';
+  return { props: { user, cycle, peerReview, selfReview: { summary } } };
 });
