@@ -43,6 +43,13 @@ export default function Home({ user, isAdmin, isManager }) {
               </NextLink>
             </Typography>
           </ListItem>
+          <ListItem>
+            <Typography variant="plain" level="h3" startDecorator="️👀 ">
+              <NextLink href="/peer-reviews/2022-q2/inbox" passHref>
+                <JoyLink>2022 Q2 查看同事给自己的反馈</JoyLink>
+              </NextLink>
+            </Typography>
+          </ListItem>
           {isAdmin && (
             <ListItem>
               <Typography variant="plain" level="h3" startDecorator="👮 ">
